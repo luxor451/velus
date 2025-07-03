@@ -201,9 +201,15 @@ module PrintFun
           branches (ty, es, None)
       | L.Ecase (e, es, d, _) ->
         let ty = List.hd (L.typeof e) in
-        fprintf p "@[<v 2>case %a of@ %a@]"
-          (exp 16) e
-          branches (ty, es, d)
+        (match es with
+         | [(S O, et); (O, ef)] ->
+         | [(O, ef); (S O, et)] ->
+           fprintf p "@[<v 2>if %a then@ %a@ else@ %a@]"
+             (exp 16) e (exp_list 16) et (exp_list 16) ef
+         | _ ->
+           fprintf p "@[<v 2>case %a of@ %a@]"
+             (exp 16) e
+             branches (ty, es, d))
       | L.Eapp (f, es, [], anns) ->
         if !print_appclocks
         then fprintf p "%a@[<v 1>%a@ (* @[<hov>%a@] *)@]"

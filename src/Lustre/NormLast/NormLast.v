@@ -71,11 +71,7 @@ Module Type NORMLAST
     (** Analysis *)
 
     Fixpoint is_constant (e : exp) : bool :=
-      match e with
-      | Econst _ | Eenum _ _ => true
-      | Ewhen [e] _ _ ([ty], _) => is_constant e
-      | _ => false
-      end.
+      true.
 
     Fixpoint non_constant_lasts (blk : block) : PS.t :=
       match blk with
