@@ -71,7 +71,7 @@ Module Type NORMLAST
     (** Analysis *)
 
     Fixpoint is_constant (e : exp) : bool :=
-      true.
+      false.
 
     Fixpoint non_constant_lasts (blk : block) : PS.t :=
       match blk with
@@ -646,9 +646,6 @@ Module Type NORMLAST
   Proof with eauto.
     intros * Hconst.
     induction e using exp_ind2; simpl in Hconst; try congruence.
-    + constructor.
-    + constructor.
-    + cases. simpl_Forall. constructor; auto.
   Qed.
 
   Lemma init_block_initialized sub : forall blk,

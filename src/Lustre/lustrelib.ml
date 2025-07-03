@@ -201,9 +201,8 @@ module PrintFun
           branches (ty, es, None)
       | L.Ecase (e, es, d, _) ->
         let ty = List.hd (L.typeof e) in
-        (match es with
-         | [(S O, et); (O, ef)] ->
-         | [(O, ef); (S O, et)] ->
+        (match List.map (fun (t, e) -> (PrintOps.int_of_enumtag t, e)) es with
+         | [(1, et); (0, ef)] | [(0, ef); (1, et)] ->
            fprintf p "@[<v 2>if %a then@ %a@ else@ %a@]"
              (exp 16) e (exp_list 16) et (exp_list 16) ef
          | _ ->
